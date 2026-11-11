@@ -1,0 +1,13 @@
+{
+  "name": "surya-gates",
+  "displayName": "Surya Gates",
+  "version": "0.1.0",
+  "description": "Let your agent run without watching it. It still stops and asks before anything you can't undo. Optional approval from your phone.",
+  "author": {
+    "name": "Krishant Maharaj",
+    "url": "https://github.com/KrishantM"
+  },
+  "repository": "https://github.com/KrishantM/surya-gates",
+  "license": "MIT",
+  "keywords": ["approval", "human-in-the-loop", "safety", "hooks", "codex", "sms", "telegram", "ntfy", "imessage"]
+}

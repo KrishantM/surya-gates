@@ -1,0 +1,27 @@
+{
+  "description": "Surya Gates: stop before anything you can't undo",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/surya-gates\" hook claude pre || exit 2", "timeout": 86400, "onFailure": "block" }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/surya-gates\" hook claude prompt || exit 2" }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/surya-gates\" hook claude end" }
+        ]
+      }
+    ]
+  }
+}

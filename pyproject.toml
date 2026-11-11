@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surya-gates"
+version = "0.1.0"
+description = "Approval gates for AI agents. Works with Claude and GPT, with optional approval from your phone."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+surya-gates = "surya_gates.cli:console"
+
+[project.urls]
+Repository = "https://github.com/KrishantM/surya-gates"
+
+[tool.setuptools]
+packages = ["surya_gates"]

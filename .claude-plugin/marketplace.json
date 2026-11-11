@@ -1,0 +1,15 @@
+{
+  "name": "surya-gates",
+  "description": "Surya Gates, an open-source tool from Surya that plugs into Claude Code.",
+  "owner": {
+    "name": "Krishant Maharaj",
+    "url": "https://github.com/KrishantM"
+  },
+  "plugins": [
+    {
+      "name": "surya-gates",
+      "source": "./",
+      "description": "Approval gates for AI agents, with optional approval from your phone."
+    }
+  ]
+}
