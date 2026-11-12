@@ -98,10 +98,10 @@ def _wait_for_yes(channel, code: str, seconds: int = 180) -> bool:
 def setup_ntfy() -> dict:
     import secrets
 
-    from .channels import ChannelError, Ntfy
+    from .channels import ChannelError, Ntfy, new_topic
 
     server = os.environ.get("SURYA_GATES_NTFY_SERVER", "https://ntfy.sh")
-    topic = os.environ.get("SURYA_GATES_NTFY_TOPIC") or "gates-" + secrets.token_urlsafe(18)
+    topic = os.environ.get("SURYA_GATES_NTFY_TOPIC") or new_topic()
     token = os.environ.get("SURYA_GATES_NTFY_TOKEN", "")
     try:
         channel = Ntfy(topic, server, token)

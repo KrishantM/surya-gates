@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest import mock
 
 from surya_gates import Gate
-from surya_gates.channels import ChannelError, IMessage, Ntfy, Telegram, Twilio, _body_text, _handle, active_codes, ask_human, build_channel, guarded, parse_reply, question, text_approver, text_enabled, wait_seconds
+from surya_gates.channels import ChannelError, IMessage, Ntfy, Telegram, Twilio, _body_text, _handle, active_codes, ask_human, build_channel, guarded, new_topic, parse_reply, question, text_approver, text_enabled, wait_seconds
 from surya_gates.session import save_config
 from tests.fakes import CHAT, HUMAN, ME, FakeMessages, FakeNtfy, FakeTelegram, FakeTwilio, typedstream
 
@@ -174,6 +174,16 @@ class TelegramOnly(Conversation):
     def test_bad_token_reported(self):
         with self.assertRaises(ChannelError):
             Telegram("wrong", CHAT, self.server.url).send("x")
+
+
+class NtfyTopic(unittest.TestCase):
+    def test_short_and_typeable(self):
+        topics = {new_topic() for _ in range(200)}
+        self.assertEqual(len(topics), 200)
+        for topic in topics:
+            self.assertRegex(topic, r"^[a-z0-9]{10}$")
+            Ntfy(topic)  # the channel accepts it
+            self.assertEqual(guarded({"text": {"channel": "ntfy", "topic": topic}}), [topic])  # long enough for the guard
 
 
 class NtfyConversation(Conversation):

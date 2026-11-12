@@ -12,6 +12,7 @@ import os
 import re
 import secrets
 import sqlite3
+import string
 import subprocess
 import sys
 import time
@@ -145,6 +146,12 @@ class Twilio:
                 continue
             found.append(Message(str(item.get("sid")), str(item.get("body", "")), at))
         return found
+
+
+def new_topic(length: int = 10) -> str:
+    """A topic short enough to type on a phone. 36 ** 10 is about 52 bits, far more than ntfy.sh's rate limits let anyone guess."""
+    alphabet = string.ascii_lowercase + string.digits
+    return "".join(secrets.choice(alphabet) for _ in range(length))
 
 
 class Ntfy:

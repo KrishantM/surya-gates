@@ -129,7 +129,7 @@ On ntfy you tap Yes, No or Trust instead of replying. On iPhone the buttons appe
 - An agent can't answer for you. Gates refuses any tool call that contains your ntfy topic or a channel token, or that reads your Messages database while iMessage is set up.
 - The command and project name pass through the service you chose. Anything shaped like a secret is hidden first. Set `"show_commands": false` under `text` in `~/.surya-gates/config.json` to send only the kind of action.
 
-**ntfy.** On the public ntfy.sh server, the topic name works as a password, so keep it private. For more control, run your own ntfy server and set `SURYA_GATES_NTFY_SERVER` and `SURYA_GATES_NTFY_TOKEN` before setup. Buttons cover yes, no and trust. To send an instruction instead, use one of the other channels.
+**ntfy.** On the public ntfy.sh server, the topic name works as a password, so keep it private. Setup makes a 10-character topic, short enough to type on a phone and still far too many to guess. For more control, run your own ntfy server and set `SURYA_GATES_NTFY_SERVER` and `SURYA_GATES_NTFY_TOKEN` before setup. Buttons cover yes, no and trust. To send an instruction instead, use one of the other channels.
 
 **iMessage.** The app that runs your agent (Terminal, iTerm, Claude or your editor) needs Full Disk Access to read your replies. macOS also asks once for permission to control Messages. Your agent runs on the same Mac as your Messages, so this is a weaker separation than a channel that lives only on your phone.
 
