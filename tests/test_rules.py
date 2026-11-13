@@ -123,3 +123,19 @@ class Tools(unittest.TestCase):
         for label, trustable in CLASSES.values():
             self.assertTrue(label)
             self.assertIsInstance(trustable, bool)
+
+
+class ForcePush(unittest.TestCase):
+    def test_force_push_says_it_overwrites_history(self):
+        for cmd in ["git push --force origin main", "git push -f origin main", "git push --force-with-lease", "git push origin +main", "cd x && git push --force"]:
+            v = classify("Bash", {"command": cmd})
+            self.assertEqual((v.action, v.cls, v.summary), ("stop", "delete", "Overwrite history on the remote"), cmd)
+
+    def test_deleting_a_remote_branch_is_still_a_delete(self):
+        for cmd in ["git push origin :branch", "git push origin --delete branch"]:
+            v = classify("Bash", {"command": cmd})
+            self.assertEqual((v.cls, v.summary), ("delete", "Delete something"), cmd)
+
+    def test_plain_push_is_unchanged(self):
+        v = classify("Bash", {"command": "git push origin main"})
+        self.assertEqual((v.cls, v.summary), ("publish", "Push or publish code"))

@@ -96,6 +96,7 @@ DELETE = _rx(
     r"\bterraform\s+destroy\b", r"\btofu\s+destroy\b", r"\bpulumi\s+destroy\b", r"\bcdk\s+destroy\b", r"\bvercel\s+(?:rm|remove)\b", r"\bfly(?:ctl)?\s+(?:apps\s+destroy|destroy|volumes\s+destroy)\b", r"\bheroku\s+apps:destroy\b", r"\bgh\s+(?:repo|release|issue)\s+delete\b", r"\bwrangler\s+delete\b",
     r"\bsupabase\s+db\s+reset\b", r"\bprisma\s+migrate\s+reset\b", r"\brails\s+db:(?:drop|reset)\b", r"\bdocker\s+(?:system|volume|image|container|network)\s+prune\b", r"\bdocker\s+(?:rm|rmi)\b", r"\bdocker[\s-]compose\s+down\s+.*-v\b",
 )
+FORCE_PUSH = _rx(GIT + r"push\b.*(?:--force\b|\s-f\b|\s\+[\w./-])")
 DEPLOY = _rx(
     r"\bvercel\b.*\s--prod\b", r"\bvercel\s+(?:promote|rollback)\b", r"\bnetlify\s+deploy\b.*--prod\b", r"\bfly(?:ctl)?\s+deploy\b", GIT + r"push\s+heroku\b", r"\bheroku\s+(?:container:release|releases:rollback)\b",
     r"\bkubectl\s+(?:apply|create|replace|patch|rollout\s+(?:restart|undo)|scale|set|drain)\b", r"\bhelm\s+(?:install|upgrade|rollback)\b", r"\b(?:terraform|tofu)\s+(?:apply|import|state\s+(?:rm|mv))\b", r"\bpulumi\s+up\b", r"\bcdk\s+deploy\b", r"\bsam\s+deploy\b", r"\b(?:serverless|sls)\s+deploy\b",
@@ -185,6 +186,8 @@ def classify_shell(command: str) -> Verdict:
         return stop("send", "Send a message")
     if MONEY.search(raw):
         return stop("money", "Spend money")
+    if FORCE_PUSH.search(text):
+        return stop("delete", "Overwrite history on the remote")
     if (RM.search(text) and (runs_quoted or not _only_rebuildable(text))) or DELETE.search(text) or (SQL_CLIENT.search(raw) and SQL_DANGER.search(raw)):
         return stop("delete", "Delete something")
     if DEPLOY.search(text):
